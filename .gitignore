@@ -1,0 +1,7 @@
+__pycache__/*.pyc
+__pycache__
+__pycache__/model_drum.cpython-38.pyc
+.DS_Store
+*.pyc
+tmp
+*.pt
