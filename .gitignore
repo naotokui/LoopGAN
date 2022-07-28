@@ -5,3 +5,4 @@ __pycache__/model_drum.cpython-38.pyc
 *.pyc
 tmp
 *.pt
+.ipynb_checkpoints
