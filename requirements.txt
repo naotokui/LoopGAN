@@ -1,0 +1,11 @@
+torch
+torchvision
+tqdm
+ninja
+librosa
+pyyaml
+python-osc
+gdown
+jupyter 
+notebook
+pydub

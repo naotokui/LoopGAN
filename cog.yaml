@@ -1,0 +1,25 @@
+predict: "predict.py:Predictor"
+build:
+  gpu: true
+  python_version: "3.8"
+  system_packages:
+    - "ffmpeg"
+  python_packages:
+    - "cython==0.29.24"
+    - "stylegan2-pytorch==1.8.1"
+    - "torch==1.6.0"
+    - "torchaudio==0.6.0"
+    - "torchvision==0.7.0"
+    - "librosa==0.8.0"
+    - "numpy==1.20.1"
+    - "scipy==1.6.2"
+    - "tqdm==4.55.2"
+    - "pysoundfile==0.9.0.post1"
+    - "pyrubberband==0.3.0"
+    - "pydub==0.23.1"
+    - "matplotlib==3.3.4"
+    - "lmdb==0.96"
+    - "pillow==8.2.0"
+    - "ninja==1.10.2"
+  pre_install:
+    - "pip install madmom==0.16.1" # needs to be after python_packages since madmom needs cython without requiring it
