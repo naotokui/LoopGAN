@@ -3,14 +3,14 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 8,
-			"minor" : 2,
-			"revision" : 2,
+			"minor" : 3,
+			"revision" : 1,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 34.0, 245.0, 1000.0, 679.0 ],
+		"rect" : [ 177.0, 266.0, 1000.0, 679.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -137,7 +137,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 946.086739152669907, 157.014140009880066, 80.0, 22.0 ],
-					"text" : "loadmess 0.1"
+					"text" : "loadmess 0.2"
 				}
 
 			}
@@ -255,7 +255,6 @@
 , 			{
 				"box" : 				{
 					"buffername" : "loop2",
-					"chanoffset" : 4,
 					"id" : "obj-121",
 					"maxclass" : "waveform~",
 					"numinlets" : 5,
@@ -268,7 +267,6 @@
 , 			{
 				"box" : 				{
 					"buffername" : "loop2",
-					"chanoffset" : 3,
 					"id" : "obj-120",
 					"maxclass" : "waveform~",
 					"numinlets" : 5,
@@ -281,7 +279,6 @@
 , 			{
 				"box" : 				{
 					"buffername" : "loop2",
-					"chanoffset" : 2,
 					"id" : "obj-119",
 					"maxclass" : "waveform~",
 					"numinlets" : 5,
@@ -294,7 +291,6 @@
 , 			{
 				"box" : 				{
 					"buffername" : "loop1",
-					"chanoffset" : 4,
 					"id" : "obj-118",
 					"maxclass" : "waveform~",
 					"numinlets" : 5,
@@ -307,7 +303,6 @@
 , 			{
 				"box" : 				{
 					"buffername" : "loop1",
-					"chanoffset" : 3,
 					"id" : "obj-117",
 					"maxclass" : "waveform~",
 					"numinlets" : 5,
@@ -320,7 +315,6 @@
 , 			{
 				"box" : 				{
 					"buffername" : "loop1",
-					"chanoffset" : 2,
 					"id" : "obj-116",
 					"maxclass" : "waveform~",
 					"numinlets" : 5,
@@ -456,8 +450,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 2,
-							"revision" : 2,
+							"minor" : 3,
+							"revision" : 1,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -502,8 +496,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 8,
-											"minor" : 2,
-											"revision" : 2,
+											"minor" : 3,
+											"revision" : 1,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -863,8 +857,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 8,
-											"minor" : 2,
-											"revision" : 2,
+											"minor" : 3,
+											"revision" : 1,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -1861,7 +1855,7 @@
 					"numoutlets" : 5,
 					"outlettype" : [ "signal", "signal", "", "float", "list" ],
 					"parameter_enable" : 1,
-					"patching_rect" : [ 69.475360512733459, 803.076926350593567, 26.0, 78.0 ],
+					"patching_rect" : [ 69.475360512733459, 811.508669912815094, 35.0, 93.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
 							"parameter_longname" : "live.gain~",
@@ -2071,7 +2065,7 @@
 					"maxclass" : "ezdac~",
 					"numinlets" : 2,
 					"numoutlets" : 0,
-					"patching_rect" : [ 64.975360512733459, 897.472619354724884, 45.0, 45.0 ]
+					"patching_rect" : [ 69.475360512733459, 918.472619354724884, 45.0, 45.0 ]
 				}
 
 			}
@@ -2395,7 +2389,7 @@
 					"mode" : 0,
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 25.576918482780457, 253.821991145610809, 589.898442029953003, 725.0 ],
+					"patching_rect" : [ 14.576918482780457, 253.821991145610809, 600.898442029953003, 733.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 32.358934104442596, 268.70054783125704, 495.513216733932495, 313.387588642638434 ],
 					"proportion" : 0.5
@@ -2994,7 +2988,23 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-69", 0 ],
+					"order" : 3,
+					"source" : [ "obj-64", 1 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-69", 1 ],
 					"order" : 2,
+					"source" : [ "obj-64", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-69", 0 ],
+					"order" : 3,
 					"source" : [ "obj-64", 0 ]
 				}
 
@@ -3143,21 +3153,7 @@
 			"inherited_shortname" : 1
 		}
 ,
-		"dependency_cache" : [ 			{
-				"name" : "img_182.png",
-				"bootpath" : "/private/tmp",
-				"patcherrelativepath" : "../../../../../private/tmp",
-				"type" : "PNG",
-				"implicit" : 1
-			}
-, 			{
-				"name" : "img_9944.png",
-				"bootpath" : "/private/tmp",
-				"patcherrelativepath" : "../../../../../private/tmp",
-				"type" : "PNG",
-				"implicit" : 1
-			}
- ],
+		"dependency_cache" : [  ],
 		"autosave" : 0
 	}
 
