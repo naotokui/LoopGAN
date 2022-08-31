@@ -187,9 +187,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 1010.596559822559357, 549.0, 50.0, 22.0 ],
-					"presentation" : 1,
-					"presentation_rect" : [ 554.596559822559357, 470.78125, 50.0, 22.0 ]
+					"patching_rect" : [ 1010.596559822559357, 549.0, 50.0, 22.0 ]
 				}
 
 			}
@@ -732,7 +730,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "jit_matrix" ],
 					"patching_rect" : [ 1380.030922174453735, 1062.0, 326.321971654891968, 84.0 ],
-					"pic" : "/tmp/img_5072.png",
+					"pic" : "/tmp/img_9404.png",
 					"presentation" : 1,
 					"presentation_rect" : [ 579.997206807136536, 168.922272731662474, 326.321971654891968, 84.0 ]
 				}
@@ -1405,14 +1403,14 @@
 		}
 ,
 		"dependency_cache" : [ 			{
-				"name" : "img_5072.png",
+				"name" : "img_6917.png",
 				"bootpath" : "/private/tmp",
 				"patcherrelativepath" : "../../../../../private/tmp",
 				"type" : "PNG",
 				"implicit" : 1
 			}
 , 			{
-				"name" : "img_6917.png",
+				"name" : "img_9404.png",
 				"bootpath" : "/private/tmp",
 				"patcherrelativepath" : "../../../../../private/tmp",
 				"type" : "PNG",
