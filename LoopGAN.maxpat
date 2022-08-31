@@ -40,6 +40,22 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"fontname" : "Ableton Sans Medium",
+					"fontsize" : 12.0,
+					"id" : "obj-2",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 992.076923012733459, 502.0, 151.0, 21.0 ],
+					"presentation" : 1,
+					"presentation_linecount" : 2,
+					"presentation_rect" : [ 38.778400838375092, 442.614977835205195, 84.0, 35.0 ],
+					"text" : "Store the last z as a preset"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-72",
 					"maxclass" : "newobj",
 					"numinlets" : 2,
@@ -183,11 +199,15 @@
 				"box" : 				{
 					"id" : "obj-18",
 					"maxclass" : "number",
+					"maximum" : 3,
+					"minimum" : 0,
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 1010.596559822559357, 549.0, 50.0, 22.0 ]
+					"patching_rect" : [ 1010.596559822559357, 549.0, 50.0, 22.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 49.278400838375092, 485.0, 50.0, 22.0 ]
 				}
 
 			}
@@ -730,7 +750,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "jit_matrix" ],
 					"patching_rect" : [ 1380.030922174453735, 1062.0, 326.321971654891968, 84.0 ],
-					"pic" : "/tmp/img_9404.png",
+					"pic" : "/tmp/img_4468.png",
 					"presentation" : 1,
 					"presentation_rect" : [ 579.997206807136536, 168.922272731662474, 326.321971654891968, 84.0 ]
 				}
@@ -839,7 +859,6 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-16",
-					"int" : 1,
 					"maxclass" : "gswitch2",
 					"numinlets" : 2,
 					"numoutlets" : 2,
@@ -1403,23 +1422,9 @@
 		}
 ,
 		"dependency_cache" : [ 			{
-				"name" : "img_6917.png",
+				"name" : "img_4468.png",
 				"bootpath" : "/private/tmp",
 				"patcherrelativepath" : "../../../../../private/tmp",
-				"type" : "PNG",
-				"implicit" : 1
-			}
-, 			{
-				"name" : "img_9404.png",
-				"bootpath" : "/private/tmp",
-				"patcherrelativepath" : "../../../../../private/tmp",
-				"type" : "PNG",
-				"implicit" : 1
-			}
-, 			{
-				"name" : "qosmo_logo_logo-navy-1024x320.png",
-				"bootpath" : "~/Downloads",
-				"patcherrelativepath" : "../../../Downloads",
 				"type" : "PNG",
 				"implicit" : 1
 			}
