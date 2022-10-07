@@ -88,7 +88,9 @@ class ResnetBlock(nn.Module):
 class Generator_melgan(nn.Module):
     def __init__(self, input_size, ngf, n_residual_layers):
         super().__init__()
-        ratios = [8, 8, 2, 2]
+        #ratios = [8, 8, 2, 2] # hop: 256
+        #ratios = [5, 5, 4, 2]
+        ratios = [5, 4, 4, 2] # hop: 160
         self.hop_length = np.prod(ratios)
         mult = int(2 ** len(ratios))
 
