@@ -6,3 +6,5 @@ __pycache__/model_drum.cpython-38.pyc
 tmp
 *.pt
 .ipynb_checkpoints
+test_audio
+hifigan/checkpoints
