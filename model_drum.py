@@ -13,6 +13,7 @@ from torch.autograd import Function
 
 from op import FusedLeakyReLU, fused_leaky_relu, upfirdn2d
 
+from transform_layers import *
 
 class PixelNorm(nn.Module):
     def __init__(self):
@@ -170,6 +171,18 @@ class EqualLinear(nn.Module):
         )
 
 
+class ScaledLeakyReLU(nn.Module):
+    def __init__(self, negative_slope=0.2):
+        super().__init__()
+
+        self.negative_slope = negative_slope
+
+    def forward(self, input):
+        out = F.leaky_relu(input, negative_slope=self.negative_slope)
+
+        return out * math.sqrt(2)
+
+
 class ModulatedConv2d(nn.Module):
     def __init__(
         self,
@@ -306,6 +319,7 @@ class StyledConv(nn.Module):
         upsample=False,
         blur_kernel=[1, 3, 3, 1],
         demodulate=True,
+        layerID=-1
     ):
         super().__init__()
 
@@ -323,14 +337,15 @@ class StyledConv(nn.Module):
         # self.bias = nn.Parameter(torch.zeros(1, out_channel, 1, 1))
         # self.activate = ScaledLeakyReLU(0.2)
         self.activate = FusedLeakyReLU(out_channel)
-        #self.activate = LeakyReLU(out_channel)
+        self.manipulation = ManipulationLayer(layerID)
+        print("layerID", layerID)
 
-    def forward(self, input, style, noise=None):
+    def forward(self, input, style, noise=None, transform_dict_list=[]):
         out = self.conv(input, style)
         out = self.noise(out, noise=noise)
         # out = out + self.bias
         out = self.activate(out)
-
+        out = self.manipulation(out, transform_dict_list)
         return out
 
 
@@ -394,15 +409,18 @@ class Generator(nn.Module):
             512: 32 * channel_multiplier,
             1024: 16 * channel_multiplier,
         }
-
+        
+        layer_index = 0
         self.input = ConstantInput(self.channels[4])
         self.conv1 = StyledConv(
-            self.channels[4], self.channels[4], 3, style_dim, blur_kernel=blur_kernel
+            self.channels[4], self.channels[4], 3, style_dim, blur_kernel=blur_kernel, layerID=layer_index
         )
+        layer_index += 1
         self.to_rgb1 = ToRGB(self.channels[4], style_dim, upsample=False)
 
         self.log_size = int(math.log(size, 2))
-        self.num_layers = (self.log_size - 2) * 2 + 1 #9
+        print(self.log_size, "logsize")
+        self.num_layers = (self.log_size - 2) * 2 + 1
 
         self.convs = nn.ModuleList()
         self.upsamples = nn.ModuleList()
@@ -427,20 +445,24 @@ class Generator(nn.Module):
                     style_dim,
                     upsample=True,
                     blur_kernel=blur_kernel,
+                    layerID = layer_index
                 )
             )
+            layer_index+=1
 
             self.convs.append(
                 StyledConv(
-                    out_channel, out_channel, 3, style_dim, blur_kernel=blur_kernel
+                    out_channel, out_channel, 3, style_dim, blur_kernel=blur_kernel, layerID = layer_index
                 )
             )
+            layer_index+=1
 
             self.to_rgbs.append(ToRGB(out_channel, style_dim))
 
             in_channel = out_channel
 
         self.n_latent = self.log_size * 2 - 2
+        print("### n_latent", self.n_latent)
 
     def make_noise(self):
         device = self.input.input.device
@@ -449,7 +471,7 @@ class Generator(nn.Module):
 
         for i in range(3, self.log_size + 1):
             for _ in range(2):
-                noises.append(torch.randn(1, 1, 2 ** i, 2 ** i, device=device))
+                noises.append(torch.randn(1, 1, 5 * 2 ** (i-2), 20 * 2 ** (i-2), device=device))
 
         return noises
 
@@ -468,12 +490,14 @@ class Generator(nn.Module):
         self,
         styles,
         return_latents=False,
+        return_activation_maps=False,
         inject_index=None,
         truncation=1,
         truncation_latent=None,
         input_is_latent=False,
         noise=None,
         randomize_noise=True,
+        transform_dict_list=[]
     ):
         if not input_is_latent:
             styles = [self.style(s) for s in styles]
@@ -513,7 +537,7 @@ class Generator(nn.Module):
             latent2 = styles[1].unsqueeze(1).repeat(1, self.n_latent - inject_index, 1)
 
             latent = torch.cat([latent, latent2], 1)
-
+        activation_map_list = []
         out = self.input(latent)
         out = self.conv1(out, latent[:, 0], noise=noise[0])
 
@@ -523,15 +547,20 @@ class Generator(nn.Module):
         for conv1, conv2, noise1, noise2, to_rgb in zip(
             self.convs[::2], self.convs[1::2], noise[1::2], noise[2::2], self.to_rgbs
         ):
-            out = conv1(out, latent[:, i], noise=noise1)
-            out = conv2(out, latent[:, i + 1], noise=noise2)
+            out = conv1(out, latent[:, i], noise=noise1, transform_dict_list=transform_dict_list)
+            activation_map_list.append(out)
+            out = conv2(out, latent[:, i + 1], noise=noise2, transform_dict_list=transform_dict_list)
+            activation_map_list.append(out)
             skip = to_rgb(out, latent[:, i + 2], skip)
 
             i += 2
 
         image = skip
 
-        if return_latents:
+        if return_activation_maps:
+            return image, activation_map_list
+        
+        elif return_latents:
             return image, latent
 
         else:
@@ -578,7 +607,11 @@ class ConvLayer(nn.Sequential):
         )
 
         if activate:
-            layers.append(FusedLeakyReLU(out_channel, bias=bias))
+            if bias:
+                layers.append(FusedLeakyReLU(out_channel))
+
+            else:
+                layers.append(ScaledLeakyReLU(0.2))
 
         super().__init__(*layers)
 
@@ -646,7 +679,7 @@ class Discriminator(nn.Module):
 
     def forward(self, input):
         out = self.convs(input)
-        
+
         batch, channel, height, width = out.shape
         group = min(batch, self.stddev_group)
         stddev = out.view(
@@ -656,9 +689,8 @@ class Discriminator(nn.Module):
         stddev = stddev.mean([2, 3, 4], keepdims=True).squeeze(2)
         stddev = stddev.repeat(group, 1, height, width)
         out = torch.cat([out, stddev], 1)
-        
-        out = self.final_conv(out)
 
+        out = self.final_conv(out)
         out = out.view(batch, -1)
         out = self.final_linear(out)
 
