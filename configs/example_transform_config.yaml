@@ -1,0 +1,79 @@
+transforms:
+- layer: 4
+  transform: "translate"
+  params: [0.25, 0.0]
+  features: "all"
+  feature-param: 
+- layer: 5
+  transform: "ablate"
+  params: []
+  features: "cluster"
+  feature-param: 2
+- layer: 12
+  transform: "binary-thresh"
+  params: [0.5]
+  features: "random"
+  feature-param: 0.5
+- layer: 1
+  transform: "flip-v"
+  params: []
+  features: "all"
+  feature-param: 
+
+
+all-transforms:
+- layer: 1
+  transform: "erode"
+  params: [2]
+  features: "all"
+  feature-param: 
+- layer: 1
+  transform: "dilate"
+  params: [2]
+  features: "all"
+  feature-param: 
+- layer: 1
+  transform: "translate"
+  params: [0.5, -.2]
+  features: "all"
+  feature-param: 
+- layer: 1
+  transform: "scale"
+  params: [1.2]
+  features: "all"
+  feature-param: 
+- layer: 1
+  transform: "rotate"
+  params: [45]
+  features: "all"
+  feature-param: 
+- layer: 1
+  transform: "flip-h"
+  params: []
+  features: "all"
+  feature-param: 
+- layer: 1
+  transform: "flip-v"
+  params: []
+  features: "all"
+  feature-param: 
+- layer: 1
+  transform: "invert"
+  params: []
+  features: "all"
+  feature-param: 
+- layer: 1
+  transform: "binary-tresh"
+  params: []
+  features: "all"
+  feature-param: 
+- layer: 1
+  transform: "scalar-multiply"
+  params: [-0.5]
+  features: "all"
+  feature-param: 
+- layer: 1
+  transform: "ablate"
+  params: []
+  features: "all"
+  feature-param: 
