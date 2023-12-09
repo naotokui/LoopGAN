@@ -15,7 +15,7 @@ $ pip install -r requirements.txt
 
 * We provide a pre-trained StyleGAN2 model trained on spectrograms of various drum beats of electronic dance music.
 ``` bash
-$ gdown -O drumbeats1_230000.pt 1B3ZWTJFuZbPPH4uIIz-pCcBTLu9-w4nw
+$ gdown -O drumbeats1_230000.pt 1VL7kfHGMTcpniZllKZtNnN1inT9AsNzu
 ```
 
 ## Run the notebook
