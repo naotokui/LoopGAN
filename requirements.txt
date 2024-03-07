@@ -1,4 +1,4 @@
-torch
+torch==1.13.1
 torchvision
 tqdm
 ninja
@@ -9,3 +9,7 @@ gdown
 jupyter 
 notebook
 pydub
+madmom
+pyrubberband
+numpy==1.26.4
+numba==0.53
