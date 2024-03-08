@@ -350,6 +350,27 @@ class ToRGB(nn.Module):
 
         return out
 
+class BendingConvModule(nn.Module):
+    def __init__(self, n_channels, act_fn='relu'):
+        super(BendingConvModule, self).__init__()
+        self.in_channels = self.out_channels = n_channels
+        self.hid_channels = n_channels
+        self.w1 = nn.Conv2d(self.in_channels, 
+                            self.hid_channels, 3, 
+                            padding='same')
+        self.w2 = nn.Conv2d(self.hid_channels,
+                            self.out_channels, 3,
+                            padding='same')
+        
+        if act_fn == 'relu':    
+            self.act_fn = F.relu
+        elif act_fn == 'sin':
+            self.act_fn = torch.sin
+    
+    def forward(self, x):
+        x = self.w1(x)
+        x = self.act_fn(x)
+        return self.w2(x)
 
 class Generator(nn.Module):
     def __init__(
@@ -436,6 +457,8 @@ class Generator(nn.Module):
             in_channel = out_channel
 
         self.n_latent = self.log_size * 2 - 2
+        
+        self.bendmodule = BendingConvModule(512)
 
     def make_noise(self):
         device = self.input.input.device
@@ -520,8 +543,10 @@ class Generator(nn.Module):
         ):
             out = conv1(out, latent[:, i], noise=noise1)
             out = conv2(out, latent[:, i + 1], noise=noise2)
+            if i == 7:
+                out = self.bendmodule(out)
             skip = to_rgb(out, latent[:, i + 2], skip)
-
+            
             i += 2
 
         image = skip
